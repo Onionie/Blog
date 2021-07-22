@@ -2,4 +2,12 @@
 <h1>Home</h1>
 <p><%= homeSC %></p>
 
+
+
+<% postTitle.forEach(function(day){%>
+  <% console.log(day.Title);%>
+  <h1><%= day.Title %></h1>
+  <p><%= day.Body %></p>
+<% });%>
+
 <%- include("partials/footer") -%>

@@ -21,7 +21,8 @@ var posts = [];
 
 app.get("/", function(req, res){
   res.render("home",
-  {homeSC: homeStartingContent,
+  { homeSC: homeStartingContent,
+    postTitle: posts,
   });
 });
 
@@ -42,6 +43,9 @@ app.get("/compose", function(req,res){
   res.render("compose");
 });
 
+//using app.post we can get the input from the body of html
+//and make an object called post and push those values in
+//our posts array then redirect them to our home page
 app.post("/compose", function(req, res){
   const post = {
     Title: req.body.postTitle,
