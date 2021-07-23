@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const _ = require('lodash');
 
 
 
@@ -12,13 +13,18 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
+//To use EJS
 app.set('view engine', 'ejs');
 
+//To use body parser
 app.use(bodyParser.urlencoded({extended: true}));
+
+//To use styling of our public folder
 app.use(express.static("public"));
 
 var posts = [];
 
+//get and render our home page "home" ejs
 app.get("/", function(req, res){
   res.render("home",
   { homeSC: homeStartingContent,
@@ -26,18 +32,21 @@ app.get("/", function(req, res){
   });
 });
 
+//get and render our about page "about" ejs
 app.get("/about", function(req, res){
   res.render("about",
   {aboutC: aboutContent,
   });
 });
 
+//get and render our contact page "contact" ejs
 app.get("/contact", function(req, res){
   res.render("contact",
   {contactC: contactContent,
   });
 });
 
+//get and render our compose page "compose" ejs
 app.get("/compose", function(req,res){
 
   res.render("compose");
@@ -56,15 +65,24 @@ app.post("/compose", function(req, res){
 });
 
 
+//Express route parameter var "postName"
+//We can then use req.params[var] to get the value
+app.get("/posts/:postName", function(req, res) {
+  const requestedTitle = _.lowerCase(req.params.postName);
 
-
-
-
-
-
-
-
-
+//For each post in our posts array we assign post.Title as storedTitle
+//Then we can use render to "post" ejs file and send the corresponding
+//title and body
+  posts.forEach(function(post){
+    const storedTitle = _.lowerCase(post.Title);
+    if (storedTitle === requestedTitle){
+      res.render("post",{
+        title: post.Title,
+        content: post.Body,
+      });
+    }
+  });
+});
 
 
 

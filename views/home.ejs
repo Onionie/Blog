@@ -2,12 +2,12 @@
 <h1>Home</h1>
 <p><%= homeSC %></p>
 
-
+<%# Using a forEach function we can access our postTitle array
+and present the object that we need using EJS %>
 
 <% postTitle.forEach(function(day){%>
-  <% console.log(day.Title);%>
   <h1><%= day.Title %></h1>
-  <p><%= day.Body %></p>
+  <p><%= day.Body.substring(0,100) + ". . ." %> <a href="/posts/<%= day.Title %>" > Read More</a></p>
 <% });%>
 
 <%- include("partials/footer") -%>
